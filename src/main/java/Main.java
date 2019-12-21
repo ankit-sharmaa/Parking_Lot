@@ -1,4 +1,6 @@
 
+import Exceptions.ParkingLotNotExistException;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -27,7 +29,9 @@ public class Main {
                     cap--;
                 }
             }
-        } catch (FileNotFoundException e){
+        } catch(ParkingLotNotExistException e){
+            System.out.println(e.getMessage());
+        }catch (FileNotFoundException e){
             System.out.println("Input file not found");
         }
     }
@@ -42,7 +46,7 @@ public class Main {
         return null;
     }
 
-    private static int parkCar(String[] parking,int i,int capacity,String[] input){
+    private static int parkCar(String[] parking,int i,int capacity,String[] input) throws ParkingLotNotExistException{
         if(parking!=null){
             if(input.length==Constants.PARK_INPUT_SIZE){
                 parking[i] = input[1];
@@ -56,13 +60,16 @@ public class Main {
                 System.out.println("Invalid Input For Car Park");
             }
         }
-        return 0;
+        throw new ParkingLotNotExistException(Constants.PARKING_LOT_NOT_EXIST);
     }
 
-    private static int leaveCar(String[] parking,int i,int capacity,String[] input){
+    private static int leaveCar(String[] parking,int i,int capacity,String[] input) throws ParkingLotNotExistException{
         if(parking!=null){
-            if(input.length==Constants.LEAVE_INPUT_SIZE && isInteger(input[Constants.LEAVE_HOUR_INDEX])){
-                int j = getIndexOfCar(parking,input[Constants.LEAVE_PLATE_INDEX]);
+            if(input.length==Constants.LEAVE_INPUT_SIZE && Helper.isInteger(input[Constants.LEAVE_HOUR_INDEX])){
+                int j = Helper.getIndexOfCar(parking,input[Constants.LEAVE_PLATE_INDEX]);
+                if(j==-1){
+                    System.out.println("Car is not parked");
+                }
                 parking[j] = null;
                 if(j<i){
                     i = j;
@@ -72,27 +79,6 @@ public class Main {
                 System.out.println("Invalid Input For Leave Park");
             }
         }
-        return 0;
-    }
-
-    private static int getIndexOfCar(String[] parking, String s) {
-        for(int i =0; i<parking.length; i++){
-            if(s.equals(parking[i])){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private static boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-        } catch(NumberFormatException e) {
-            return false;
-        } catch(NullPointerException e) {
-            return false;
-        }
-        // only got here if we didn't return false
-        return true;
+        throw new ParkingLotNotExistException(Constants.PARKING_LOT_NOT_EXIST);
     }
 }
