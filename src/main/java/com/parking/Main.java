@@ -11,18 +11,17 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static String[] parking = null;
-    private static int current = 0;
-    private static int cap = 0;
+    public static String[] parking = null;
+    public static int current = 0;
+    public static int cap = 0;
 
     public static void main(String[] args) {
         try {
             String fileName = "";
             for(String s:args){
-                System.out.println(s);
                 fileName = fileName + s;
             }
-            FileInputStream stream = new FileInputStream("");
+            FileInputStream stream = new FileInputStream(fileName);
             Scanner sc = new Scanner(stream);
             while (sc.hasNext()) {
                 processInput(sc.nextLine());
@@ -34,7 +33,7 @@ public class Main {
         }
     }
 
-    private static void processInput(String inputLine) throws ParkingLotNotExistException {
+    public static void processInput(String inputLine) throws ParkingLotNotExistException {
         try {
             String[] input = null;
             input = inputLine.split(" ");
@@ -56,7 +55,7 @@ public class Main {
         }
     }
 
-    private static void printStatus(String[] parking) {
+    public static void printStatus(String[] parking) {
         System.out.println(Constants.STATUS_HEADER);
         for (int i = 0; i < parking.length; i++) {
             if (parking[i] != null) {
@@ -65,18 +64,17 @@ public class Main {
         }
     }
 
-    private static String[] createParkingLot(String capacity) {
+    public static String[] createParkingLot(String capacity) throws InvalidInputException{
         try {
             int c = Integer.parseInt(capacity);
             System.out.println("Created parking lot with " + capacity + " slots");
             return new String[c];
         } catch (Exception e) {
-            System.out.println("Incorrect Capacity");
+            throw new InvalidInputException("Incorrect Capacity");
         }
-        return null;
     }
 
-    private static int parkCar(String[] parking, int i, String[] input) throws ParkingLotNotExistException, InvalidInputException, ParkingLotFullException {
+    public static int parkCar(String[] parking, int i, String[] input) throws ParkingLotNotExistException, InvalidInputException, ParkingLotFullException {
         if (parking == null) {
             throw new ParkingLotNotExistException(Constants.PARKING_LOT_NOT_EXIST);
         }
@@ -98,7 +96,7 @@ public class Main {
         return i;
     }
 
-    private static int leaveCar(String[] parking, int i, String[] input) throws ParkingLotNotExistException, CarNotFoundException, InvalidInputException {
+    public static int leaveCar(String[] parking, int i, String[] input) throws ParkingLotNotExistException, CarNotFoundException, InvalidInputException {
         if (parking == null) {
             throw new ParkingLotNotExistException(Constants.PARKING_LOT_NOT_EXIST);
         }
@@ -118,7 +116,7 @@ public class Main {
         return i;
     }
 
-    private static int getParkingChanges(String s) {
+    public static int getParkingChanges(String s) {
         int hr = Integer.parseInt(s);
         if (hr <= 2) {
             return Constants.FIXED_PARKING_CHARGE;

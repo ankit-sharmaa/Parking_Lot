@@ -10,7 +10,6 @@ class Constants {
     static final String PARKING_LOT_NOT_EXIST = "Parking lot does not exist";
     static final String REGISTRATION_NUMBER ="Registration number";
     static final String NOT_FOUND = "not found";
-    static final String CAR_NOT_FOUND = "CAR is not Parked in the lot";
     static final String PARKING_LOT_FULL = "Sorry, parking lot is full";
     static final String INVALID_INPUT = "Invalid input entered";
 
