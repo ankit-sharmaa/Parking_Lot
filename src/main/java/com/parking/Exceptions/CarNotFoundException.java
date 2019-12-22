@@ -1,4 +1,4 @@
-package Exceptions;
+package com.parking.Exceptions;
 
 public class CarNotFoundException extends Exception {
 

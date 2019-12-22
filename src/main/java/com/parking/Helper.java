@@ -1,3 +1,5 @@
+package com.parking;
+
 class Helper {
      static int getIndexOfCar(String[] parking, String s) {
         for(int i =0; i<parking.length; i++){
